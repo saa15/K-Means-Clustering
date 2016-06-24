@@ -58,13 +58,11 @@ public class KMeans {
 			for (i = 0; i < dataset.size(); i++) {
 				flag = findCluster(dataset.get(i), means);
 			}
-			//System.out.println(flag);
 			if(flag==true)
 				updateMeans();
 			else if(flag==false)
 				break;
 		}
-		//System.out.println("p value="+p);
 		StringBuilder sb = new StringBuilder();
 		sb.append("SSE = "+df.format(calculateSSE())+"\n");
 		sb.append(printClusters());
