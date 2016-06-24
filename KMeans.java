@@ -13,6 +13,13 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.Scanner;
 
+/*
+  This class inputs a dataset that has 2 attributes and
+  computes the K-Means. By changing the K-value, the SSE value changes.
+  args[0] contains the K value.
+  args[1] and args[2] specify the input and the output filenames
+  */
+        
 public class KMeans {
 	static ArrayList<DataPoint> dataset = null;
 	static DataPoint means[] = null;
@@ -26,19 +33,17 @@ public class KMeans {
 		br.readLine();
 		String singleLine = br.readLine();
 
-		// Creating a data set from the file
+		// Creating a data set from the file (tab-separated values)
 		while (singleLine != null) {
 			String[] points = singleLine.split("	");
 			dp = new DataPoint(Float.parseFloat(points[1]), Float.parseFloat(points[2]));
 			dataset.add(dp);
 			singleLine = br.readLine();
 		}
-		/*System.out.println("Enter K value:");
-		Scanner sc = new Scanner(System.in);*/
-
-		// Initializing means - Choose a randomPoint
+		
+        
+		// Initializing means and picking data points randomly as the centroids of K-clusters.
 		means = new DataPoint[Integer.parseInt(args[0])];
-		//means = new DataPoint[sc.nextInt()];
 		int[] initPoints = new int[means.length];
 		for(int init=0;init<initPoints.length;init++){
 			initPoints[init] = -1;
@@ -52,6 +57,12 @@ public class KMeans {
 			means[i] = dataset.get(randomint);
 		}
 		
+		/*
+		    Repeat for all points in the dataset
+			1. Calculating the distance of a point from all the cluster centers/centroids.
+			2. Assigning the points to the cluster at a shortest distance.
+			3. Updating the centroids/means of the clusters.
+		*/
 		for (int p = 0; p < dataset.size(); p++) {
 			boolean flag = false;
 			int i = 0;
@@ -72,6 +83,10 @@ public class KMeans {
 		writer.close();
 	}
 
+	/*
+	  calculating the sum of sqaured errors to estimate the goodness of fit 
+	  of the clustering. SSE decreases as K increases and vice-versa.
+	*/
 	private static double calculateSSE() {
 		double sse = 0;
 		for(DataPoint dp:dataset){
@@ -81,6 +96,12 @@ public class KMeans {
 		return sse;
 	}
 
+	/*
+	   Checking if there is any repetition in the randomly chosen datapoints
+	   as the centroids of clusters initially.
+	   If repeated, choose another point.
+	   Else, nothing.
+	*/
 	private static boolean randomContains(int[] initPoints, int randomint) {
 		boolean flag = false;
 		for(int x:initPoints){
@@ -90,6 +111,9 @@ public class KMeans {
 		return flag;
 	}
 
+	/*
+	 Print function to display the results in the output format described in the README file 
+	*/
 	private static String printClusters() {
 		int i = 0;
 		int k = 0;
@@ -117,6 +141,9 @@ public class KMeans {
 		return sb.toString();
 	}
 
+	/*
+	  Updating the means of clusters after assigning the data points to the closest clusters
+	*/
 	private static void updateMeans() {
 		int k = 0;
 		double sumsX[] = new double[means.length];
@@ -136,6 +163,10 @@ public class KMeans {
 
 	}
 
+	/*
+	  Calculating the distance of a point from the centroids of all the clusters 
+	  to determine the cluster that the point is closest to.
+	*/
 	private static boolean findCluster(DataPoint dataPoint, DataPoint[] means) {
 		boolean flag = false;
 		double dist = Double.MAX_VALUE;
@@ -150,6 +181,9 @@ public class KMeans {
 		return flag;
 	}
 
+	/*
+	  Calculating the distance using Euclidean Distance metric
+	*/
 	private static double findDistance(DataPoint dataPoint, DataPoint means2) {
 		double x = Math.pow(dataPoint.getX() - means2.getX(), 2);
 		double y = Math.pow(dataPoint.getY() - means2.getY(), 2);
