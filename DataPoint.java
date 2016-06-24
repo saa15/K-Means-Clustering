@@ -1,4 +1,8 @@
-
+/*
+ Each point in the dataset has 2 attributes. 
+ Each point is considered as an object with its x-y coordinates 
+ and the cluster that it belongs to as the attributes.
+ */
 public class DataPoint {
 	double x;
 	double y;
