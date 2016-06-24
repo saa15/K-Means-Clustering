@@ -1,4 +1,3 @@
-# Machine-Learning
 Implementation of K-Means Algorithm using Euclidean distance on a dataset with 2 attributes.
 
 Initialization:
@@ -10,10 +9,11 @@ assignment, you should also limit your update step to a maximum of 25 iterations
 
 Input:
 The input file will be specified by the parameter <input-file-name>.
+Sample Input for the KMeans.java file: 
+<K-value> <input_filename> <output_filename>
+100 "SampleInputDataSet.txt" "SampleOutputObtained.doc"
 
 Output:
-Your code should also output to a file called specified by the parameter <output-file-name>
-and should be in the format:
 <cluster-id> <List of points ids separated by comma>
 For example,
 1       2, 4, 7, 10
@@ -23,6 +23,4 @@ The usual method of evaluating the goodness of clustering will be used. It is th
 Squared Error function, defined as:
 SSE = ΣΣ dist(mi,x) * dist(mi,x)
 mi is the centroid of ith cluster
-
-
-
+Results.doc contains the SSE values 
